@@ -1,32 +1,68 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <Navigation :user='user' @logout='logout'/>
+    <router-view
+      class="container-fluid"
+      :user='user'
+      :error='error'
+      @logout='logout'
+    />
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Navigation from '@/components/Navigation.vue'
+import Firebase from 'firebase'
+import db from './db.js'
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+export default {
+  name: 'App',
+  data: function () {
+    return {
+      user: null,
+      error: null,
+      meetings: []
     }
+  },
+  methods: {
+    logout: function () {
+      Firebase.auth()
+        .signOut()
+        .then(() => {
+          this.user = null
+          this.$router.push('login')
+        })
+    }
+  },
+  mounted () {
+    Firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.user = user
+
+        db.collection('users')
+          .doc(this.user.uid)
+          .collection('meetings')
+          .onSnapshot(snapshot => {
+            const snapData = []
+            snapshot.forEach(doc => {
+              snapData.push({
+                id: doc.id,
+                name: doc.data().name
+              })
+            })
+            this.meetings = snapData
+          })
+      }
+    }
+    )
+  },
+  components: {
+    Navigation
   }
 }
+</script>
+
+<style lang="scss">
+// $primary: #140a9a;
+@import "node_modules/bootstrap/scss/bootstrap";
 </style>
