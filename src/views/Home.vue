@@ -3,7 +3,7 @@
     <div class="mt-3">
       <div class="text-secondary text-center">
         Welcome back,
-        <span class="font-weight-bold text-info">{{ user.displayName }}</span>
+        <span class="font-weight-bold text-info">{{ user }}</span>
       </div>
     </div>
     <br />

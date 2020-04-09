@@ -21,7 +21,7 @@ export default {
     return {
       user: null,
       error: null,
-      meetings: []
+      employee: []
     }
   },
   methods: {
@@ -31,6 +31,14 @@ export default {
         .then(() => {
           this.user = null
           this.$router.push('login')
+        })
+    },
+    addEmployee: function (payload) {
+      db.collection('employees')
+        .add({
+          badge: payload.badge_value,
+          first_name: payload.first_name_value,
+          createdAt: Firebase.firestore.FieldValue.serverTimestamp()
         })
     }
   },

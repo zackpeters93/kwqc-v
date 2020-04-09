@@ -2,10 +2,11 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
-import Meetings from '../views/Meetings.vue'
+// import Meetings from '../views/Meetings.vue'
 import Register from '../views/Register.vue'
 import Welds from '../views/Welds.vue'
 import Employees from '../views/Employees.vue'
+import AddEmployee from '../views/AddEmployee.vue'
 
 Vue.use(VueRouter)
 
@@ -31,9 +32,9 @@ const routes = [
     component: Employees
   },
   {
-    path: '/meetings',
-    name: 'Meetings',
-    component: Meetings
+    path: '/addemployee',
+    name: 'AddEmployee',
+    component: AddEmployee
   },
   {
     path: '/register',
