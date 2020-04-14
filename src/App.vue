@@ -6,6 +6,7 @@
       :user='user'
       :error='error'
       @logout='logout'
+      @addEmployee='addEmployee'
     />
   </div>
 </template>
@@ -13,7 +14,7 @@
 <script>
 import Navigation from '@/components/Navigation.vue'
 import Firebase from 'firebase'
-import db from './db.js'
+import { db } from '@/db/index.js'
 
 export default {
   name: 'App',
@@ -38,6 +39,15 @@ export default {
         .add({
           badge: payload.badge_value,
           first_name: payload.first_name_value,
+          last_name: payload.last_name_value,
+          gmaw_p: payload.gmaw_p_value,
+          smaw: payload.smaw_value,
+          saw: payload.saw_value,
+          gtaw: payload.gtaw_value,
+          t1: payload.t1_value,
+          sst_smaw: payload.sst_smaw_value,
+          sst_fcaw: payload.sst_fcaw_value,
+          t5: payload.t5_value,
           createdAt: Firebase.firestore.FieldValue.serverTimestamp()
         })
     }

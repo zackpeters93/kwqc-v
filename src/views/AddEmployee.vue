@@ -12,21 +12,21 @@
                             <div class="col-4">
                                 <div class="form-group">
                                   <label for="">Badge#</label>
-                                  <input type="text" name="" id="" class="form-control" placeholder="Employee's Badge #" aria-describedby="helpId" v-model="form.badge_value">
+                                  <input type="text" name="" id="" class="form-control" placeholder="Employee's Badge #" aria-describedby="helpId" v-model="form.badge_value" ref="badge">
                                   <small id="helpId" class="text-muted"></small>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
                                   <label for="">First Name</label>
-                                  <input type="text" name="" id="" class="form-control" placeholder="Employee's First Name" aria-describedby="helpId" v-model="form.first_name_value">
+                                  <input type="text" name="" id="" class="form-control" placeholder="Employee's First Name" aria-describedby="helpId" v-model="form.first_name_value" ref="firstname">
                                   <small id="helpId" class="text-muted"></small>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
                                   <label for="">Last Name</label>
-                                  <input type="text" name="" id="" class="form-control" placeholder="Employee's Last Name" aria-describedby="helpId" v-model="form.last_name_value">
+                                  <input type="text" name="" id="" class="form-control" placeholder="Employee's Last Name" aria-describedby="helpId" v-model="form.last_name_value" ref="lastname">
                                   <small id="helpId" class="text-muted"></small>
                                 </div>
                             </div>
@@ -40,8 +40,8 @@
                                         <b-input-group-append>
                                             <b-form-datepicker
                                             v-model="form.gmaw_p_value"
-                                            :min="min"
-                                            :max="max"
+                                            :min="form.min"
+                                            :max="form.max"
                                             :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                                             button-variant="success"
                                             button-only
@@ -56,6 +56,7 @@
                                             v-model="form.gmaw_p_value"
                                             type="text"
                                             placeholder="YYYY-MM-DD"
+                                            ref="gmaw"
                                         ></b-form-input>
                                     </b-input-group>
                                 </div>
@@ -67,8 +68,8 @@
                                         <b-input-group-append>
                                             <b-form-datepicker
                                             v-model="form.smaw_value"
-                                            :min="min"
-                                            :max="max"
+                                            :min="form.min"
+                                            :max="form.max"
                                             :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                                             button-variant="success"
                                             button-only
@@ -82,6 +83,7 @@
                                             v-model="form.smaw_value"
                                             type="text"
                                             placeholder="YYYY-MM-DD"
+                                            ref="smaw"
                                         ></b-form-input>
                                     </b-input-group>
                                 </div>
@@ -93,8 +95,8 @@
                                         <b-input-group-append>
                                             <b-form-datepicker
                                             v-model="form.saw_value"
-                                            :min="min"
-                                            :max="max"
+                                            :min="form.min"
+                                            :max="form.max"
                                             :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                                             button-variant="success"
                                             button-only
@@ -108,6 +110,7 @@
                                             v-model="form.saw_value"
                                             type="text"
                                             placeholder="YYYY-MM-DD"
+                                            ref="saw"
                                         ></b-form-input>
                                     </b-input-group>
                                 </div>
@@ -119,9 +122,9 @@
                                         <b-input-group-append>
                                             <b-form-datepicker
                                             v-model="form.gtaw_value"
-                                            :min="min"
-                                            :max="max"
-                                            :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                                            :min="form.min"
+                                            :max="form.max"
+                                            :date-format-options="{month: 'numeric', day: 'numeric', year: 'numeric' }"
                                             button-variant="success"
                                             button-only
                                             right
@@ -134,6 +137,7 @@
                                             v-model="form.gtaw_value"
                                             type="text"
                                             placeholder="YYYY-MM-DD"
+                                            ref="gtaw"
                                         ></b-form-input>
                                     </b-input-group>
                                 </div>
@@ -147,8 +151,8 @@
                                         <b-input-group-append>
                                             <b-form-datepicker
                                             v-model="form.t1_value"
-                                            :min="min"
-                                            :max="max"
+                                            :min="form.min"
+                                            :max="form.max"
                                             :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                                             button-variant="success"
                                             button-only
@@ -162,6 +166,7 @@
                                             v-model="form.t1_value"
                                             type="text"
                                             placeholder="YYYY-MM-DD"
+                                            ref="t1"
                                         ></b-form-input>
                                     </b-input-group>
                                 </div>
@@ -173,8 +178,8 @@
                                         <b-input-group-append>
                                             <b-form-datepicker
                                             v-model="form.sst_smaw_value"
-                                            :min="min"
-                                            :max="max"
+                                            :min="form.min"
+                                            :max="form.max"
                                             :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                                             button-variant="success"
                                             button-only
@@ -188,6 +193,7 @@
                                             v-model="form.sst_smaw_value"
                                             type="text"
                                             placeholder="YYYY-MM-DD"
+                                            ref="sst_smaw"
                                         ></b-form-input>
                                     </b-input-group>
                                 </div>
@@ -199,8 +205,8 @@
                                         <b-input-group-append>
                                             <b-form-datepicker
                                             v-model="form.sst_fcaw_value"
-                                            :min="min"
-                                            :max="max"
+                                            :min="form.min"
+                                            :max="form.max"
                                             :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                                             button-variant="success"
                                             button-only
@@ -214,6 +220,7 @@
                                             v-model="form.sst_fcaw_value"
                                             type="text"
                                             placeholder="YYYY-MM-DD"
+                                            ref="sst_fcaw"
                                         ></b-form-input>
                                     </b-input-group>
                                 </div>
@@ -225,8 +232,8 @@
                                         <b-input-group-append>
                                             <b-form-datepicker
                                             v-model="form.t5_value"
-                                            :min="min"
-                                            :max="max"
+                                            :min="form.min"
+                                            :max="form.max"
                                             :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                                             button-variant="success"
                                             button-only
@@ -240,6 +247,7 @@
                                             v-model="form.t5_value"
                                             type="text"
                                             placeholder="YYYY-MM-DD"
+                                            ref="t5"
                                         ></b-form-input>
                                     </b-input-group>
                                 </div>
