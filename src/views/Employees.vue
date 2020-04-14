@@ -30,6 +30,16 @@
                                     <th scope="row">{{ item.badge }}</th>
                                     <td>{{ item.first_name }}</td>
                                     <td>{{ item.last_name }}</td>
+                                    <!-- TODO
+                                    These 8 items should change based on the following parameters:
+                                    From today:
+                                        If date is <= 5 months ago, use bg-success
+                                        Else if date is > 5months ago && < 6 months ago, use bg-warning
+                                        Else if date is >= 6 months ago && < 12 months ago, use bg-danger
+                                        Else if date is >= 12 months ago, use bg-dark
+                                        Else use bg-light text-black
+
+                                        Also, if date is null then use bg-light text-black and leave the field blank -->
                                     <td class="bg-primary text-white">{{ item.gmaw_p }}</td>
                                     <td class="bg-success text-white">{{ item.smaw }}</td>
                                     <td class="bg-success text-white">{{ item.saw }}</td>

@@ -8,6 +8,13 @@
                     </div>
                     <div class="card-body">
                         <b-card-group deck>
+                            <!-- TODO
+                            On each card, count the number of employees who:
+                            have a valid date for that specific weld type, display total in the light variant badge
+                            have a date within the past 5 months for the specific weld type, display total in the success variant badge
+                            have a date between 5 and 6 months for the specific weld type, display total in the warning variant badge
+                            have a date between 6 and 12 months for the specific weld type, display total in the danger variant badge
+                            repeat for all weld types -->
                             <b-card header-bg-variant="light" text-variant="black" header="GMAW-P" class="text-center">
                                 <b-card-text>
                                     <div class="row">
