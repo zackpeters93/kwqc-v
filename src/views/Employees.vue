@@ -25,64 +25,19 @@
                                 <th scope="col">Update</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody v-for="item in employees" :key="item.id">
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td class="bg-success text-white">1/1/2020</td>
-                                    <td class="bg-success text-white">12/30/2019</td>
-                                    <td class="bg-success text-white">1/1/2020</td>
-                                    <td class="bg-success text-white">12/30/2019</td>
-                                    <td class="bg-success text-white">1/1/2020</td>
-                                    <td class="bg-success text-white">12/30/2019</td>
-                                    <td class="bg-success text-white">1/1/2020</td>
-                                    <td class="bg-success text-white">12/30/2019</td>
-                                    <td></td>
-                                    <td>
-                                        <b-button-toolbar aria-label="update toolbar">
-                                            <b-button-group size="sm" class="mr-1">
-                                                <b-button variant="outline-secondary" v-b-modal.update><i class="fas fa-file-signature"></i></b-button>
-                                                <b-button variant="outline-secondary" v-b-modal.edit><i class="far fa-edit"></i></b-button>
-                                                <b-button variant="outline-secondary" v-b-modal.inactivate><i class="far fa-window-close"></i></b-button>
-                                            </b-button-group>
-                                        </b-button-toolbar>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td class="bg-success text-white">1/1/2020</td>
-                                    <td class="bg-warning text-white">12/30/2019</td>
-                                    <td class="bg-danger text-white">1/1/2020</td>
-                                    <td class="bg-light">12/30/2019</td>
-                                    <td class="bg-light">1/1/2020</td>
-                                    <td class="bg-light">12/30/2019</td>
-                                    <td class="bg-dark text-white">1/1/2020</td>
-                                    <td class="bg-success text-white">12/30/2019</td>
-                                    <td></td>
-                                    <td>
-                                        <b-button-toolbar aria-label="update toolbar">
-                                            <b-button-group size="sm" class="mr-1">
-                                                <b-button variant="outline-secondary" v-b-modal.update><i class="fas fa-file-signature"></i></b-button>
-                                                <b-button variant="outline-secondary" v-b-modal.edit><i class="far fa-edit"></i></b-button>
-                                                <b-button variant="outline-secondary" v-b-modal.inactivate><i class="far fa-window-close"></i></b-button>
-                                            </b-button-group>
-                                        </b-button-toolbar>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td colspan="2">Larry the Bird</td>
-                                    <td>1/1/2020</td>
-                                    <td>12/30/2019</td>
-                                    <td>1/1/2020</td>
-                                    <td>12/30/2019</td>
-                                    <td>1/1/2020</td>
-                                    <td>12/30/2019</td>
-                                    <td>1/1/2020</td>
-                                    <td>12/30/2019</td>
+                                    <th scope="row">{{ item.badge }}</th>
+                                    <td>{{ item.first_name }}</td>
+                                    <td>{{ item.last_name }}</td>
+                                    <td class="bg-primary text-white">{{ item.gmaw_p }}</td>
+                                    <td class="bg-success text-white">{{ item.smaw }}</td>
+                                    <td class="bg-success text-white">{{ item.saw }}</td>
+                                    <td class="bg-success text-white">{{ item.gtaw }}</td>
+                                    <td class="bg-success text-white">{{ item.t1 }}</td>
+                                    <td class="bg-success text-white">{{ item.sst_smaw }}</td>
+                                    <td class="bg-success text-white">{{ item.sst_fcaw }}</td>
+                                    <td class="bg-success text-white">{{ item.t5 }}</td>
                                     <td></td>
                                     <td>
                                         <b-button-toolbar aria-label="update toolbar">
@@ -417,11 +372,47 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 import Firebase from 'firebase'
-// eslint-disable-next-line no-unused-vars
-import db from '../db.js'
+import { db } from '@/db/index.js'
+import moment from 'moment'
 
 export default {
-  name: 'employees'
+  name: 'employees',
+  data: function () {
+    return {
+      employees: [],
+      displayEmployees: [],
+      searchQuery: ''
+    }
+  },
+  computed: {
 
+  },
+  methods: {
+
+  },
+  mounted () {
+    db.collection('employees')
+      .onSnapshot(snapshot => {
+        const snapData = []
+        snapshot.forEach(doc => {
+          snapData.push({
+            id: doc.id,
+            badge: doc.data().badge,
+            first_name: doc.data().first_name,
+            last_name: doc.data().last_name,
+            gmaw_p: moment(doc.data().gmaw_p).format('L'),
+            smaw: moment(doc.data().smaw).format('L'),
+            saw: moment(doc.data().saw).format('L'),
+            gtaw: moment(doc.data().gtaw).format('L'),
+            t1: moment(doc.data().t1).format('L'),
+            sst_smaw: moment(doc.data().sst_smaw).format('L'),
+            sst_fcaw: moment(doc.data().sst_fcaw).format('L'),
+            t5: moment(doc.data().t5).format('L')
+          })
+        })
+        this.employees = snapData
+        this.displayEmployees = this.employees
+      })
+  }
 }
 </script>
