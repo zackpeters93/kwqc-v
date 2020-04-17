@@ -40,18 +40,18 @@
                                         Else use bg-light text-black
 
                                         Also, if date is null then use bg-light text-black and leave the field blank -->
-                                    <td class="bg-primary text-white">{{ item.gmaw_p }}</td>
-                                    <td class="bg-success text-white">{{ item.smaw }}</td>
-                                    <td class="bg-success text-white">{{ item.saw }}</td>
-                                    <td class="bg-success text-white">{{ item.gtaw }}</td>
-                                    <td class="bg-success text-white">{{ item.t1 }}</td>
-                                    <td class="bg-success text-white">{{ item.sst_smaw }}</td>
-                                    <td class="bg-success text-white">{{ item.sst_fcaw }}</td>
-                                    <td class="bg-success text-white">{{ item.t5 }}</td>
+                                    <td :class="[classBasedOnDate(item.gmaw_p)]"   >{{ formatDate(item.gmaw_p) }}</td>
+                                    <td :class="[classBasedOnDate(item.smaw)]"   >{{ formatDate(item.smaw) }}</td>
+                                    <td :class="[classBasedOnDate(item.saw)]"   >{{ formatDate(item.saw) }}</td>
+                                    <td :class="[classBasedOnDate(item.gtaw)]"   >{{ formatDate(item.gtaw) }}</td>
+                                    <td :class="[classBasedOnDate(item.t1)]"   >{{ formatDate(item.t1) }}</td>
+                                    <td :class="[classBasedOnDate(item.sst_smaw)]"   >{{ formatDate(item.sst_smaw) }}</td>
+                                    <td :class="[classBasedOnDate(item.sst_fcaw)]"   >{{ formatDate(item.sst_fcaw) }}</td>
+                                    <td :class="[classBasedOnDate(item.t5)]"   >{{ formatDate(item.t5) }}</td>
                                     <td></td>
                                     <td>
                                         <b-button-toolbar aria-label="update toolbar">
-                                            <b-button-group size="sm" class="mr-1">
+                                            <b-button-group class="mr-1">
                                                 <b-button variant="outline-secondary" v-b-modal.update><i class="fas fa-file-signature"></i></b-button>
                                                 <b-button variant="outline-secondary" v-b-modal.edit><i class="far fa-edit"></i></b-button>
                                                 <b-button variant="outline-secondary" v-b-modal.inactivate><i class="far fa-window-close"></i></b-button>
@@ -398,7 +398,30 @@ export default {
 
   },
   methods: {
+    classBasedOnDate (d) {
+      let dt = this.formatDate(d)
+      if (dt === '') return 'bg-light text-black'
+      // eslint-disable-next-line no-unused-vars
+      const curDate = moment().format('X')
+      dt = moment(dt, 'MM/DD/YYYY').format('X')
+      const fiveM = moment().subtract(5, 'months').format('X')
+      const sixM = moment().subtract(6, 'months').format('X')
+      const twelveM = moment().subtract(12, 'months').format('X')
 
+      if (dt >= fiveM) return 'bg-success text-white'
+      else if (dt < fiveM && dt > sixM) return 'bg-warning text-white'
+      else if (dt <= sixM && dt > twelveM) return 'bg-danger text-white'
+      else if (dt <= twelveM) return 'bg-dark text-white'
+      return 'bg-light text-black'
+    },
+    formatDate (d) {
+      console.log(d)
+      const dt = moment(d, 'YYYY-MM-DD').format('MM/DD/YYYY')
+      if (dt === 'Invalid date') {
+        return ''
+      }
+      return dt
+    }
   },
   mounted () {
     db.collection('employees')
@@ -410,14 +433,15 @@ export default {
             badge: doc.data().badge,
             first_name: doc.data().first_name,
             last_name: doc.data().last_name,
-            gmaw_p: moment(doc.data().gmaw_p).format('L'),
-            smaw: moment(doc.data().smaw).format('L'),
-            saw: moment(doc.data().saw).format('L'),
-            gtaw: moment(doc.data().gtaw).format('L'),
-            t1: moment(doc.data().t1).format('L'),
-            sst_smaw: moment(doc.data().sst_smaw).format('L'),
-            sst_fcaw: moment(doc.data().sst_fcaw).format('L'),
-            t5: moment(doc.data().t5).format('L')
+            gmaw_p: doc.data().gmaw_p,
+            smaw: doc.data().smaw,
+            saw: doc.data().saw,
+            gtaw: doc.data().gtaw,
+            t1: doc.data().t1,
+            sst_smaw: doc.data().sst_smaw,
+            sst_fcaw: doc.data().sst_fcaw,
+            t5: doc.data().t5
+
           })
         })
         this.employees = snapData
